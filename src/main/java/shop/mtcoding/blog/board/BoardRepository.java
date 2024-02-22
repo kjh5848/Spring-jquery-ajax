@@ -31,13 +31,21 @@ public class BoardRepository {
         }
 
     }
-
     @Transactional
-    public void insert(String title, String content, String author){
+    public void insert(BoardRequest.ReadDTO requestDTO){
         Query query = em.createNativeQuery("insert into board_tb(title, content, author) values(?, ?, ?)");
-        query.setParameter(1, title);
-        query.setParameter(2, content);
-        query.setParameter(3, author);
+        query.setParameter(1, requestDTO.getTitle());
+        query.setParameter(2, requestDTO.getContent());
+        query.setParameter(3, requestDTO.getAuthor());
+
+        query.executeUpdate();
+    }
+    @Transactional
+    public void insert(BoardRequest.WriteDTO requestDTO){
+        Query query = em.createNativeQuery("insert into board_tb(title, content, author) values(?, ?, ?)");
+        query.setParameter(1, requestDTO.getTitle());
+        query.setParameter(2, requestDTO.getContent());
+        query.setParameter(3, requestDTO.getAuthor());
 
         query.executeUpdate();
     }
@@ -50,5 +58,20 @@ public class BoardRepository {
         Query query = em.createNativeQuery(a);
         query.setParameter(1, id);
         query.executeUpdate();
+    }
+
+    @Transactional
+    public void update(BoardRequest.ReadDTO requestDTO, int id) {
+        String a = """
+                update board_tb set author = ?, title= ?, content =?  where id = ?  ;
+                """;
+
+        Query query = em.createNativeQuery(a);
+        query.setParameter(1, requestDTO.getAuthor());
+        query.setParameter(2, requestDTO.getTitle());
+        query.setParameter(3, requestDTO.getContent());
+        query.setParameter(4, id);
+        query.executeUpdate();
+
     }
 }
