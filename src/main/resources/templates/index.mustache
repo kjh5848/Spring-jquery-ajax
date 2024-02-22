@@ -12,7 +12,7 @@
             <th></th>
         </tr>
         </thead>
-        <tbody id="BoardBox">
+        <tbody id="boardBox">
 
         </tbody>
     </table>
@@ -20,6 +20,22 @@
 </div>
 
 <script>
+    function del(boardId){
+        $.ajax({
+            url: `/api/boards/${boardId}`,
+            type : "delete"
+        }).done((res)=>{
+            console.log(res)
+
+            $(`#board-${boardId}`).remove();
+
+        }).fail((res)=>{
+            console.log(res)
+            alert(res.responseJSON.msg);
+            location.reload();
+        });
+    }
+
     $.ajax({
         url: "/api/boards",
         type: "get"
@@ -27,8 +43,8 @@
         console.log("성공")
         console.log(res);
         let boardList = res.body
-        boardList.forEach((Board) => {
-            $("#BoardBox").append(render(Board));
+        boardList.forEach((board) => {
+            $("#boardBox").append(render(board));
         })
     }).fail((res) => {
         alert(res.responseJSON.msg);
@@ -46,7 +62,7 @@
             <td>${Board.author}</td>
             <td>
                 <div class="d-flex">
-                    <button onclick="del(${Board.id}" class="btn btn-danger">삭제</button>
+                    <button onclick="del(${Board.id})" class="btn btn-danger">삭제</button>
 
                     <form action="/board/${Board.id}/updateForm" method="get">
                         <button class="btn btn-warning">수정</button>
