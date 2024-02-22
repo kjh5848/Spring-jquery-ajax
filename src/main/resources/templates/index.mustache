@@ -12,90 +12,49 @@
             <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>5</td>
-            <td>제목5</td>
-            <td>내용5</td>
-            <td>홍길동</td>
-            <td>
-                <div class="d-flex">
-                    <form action="#">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/board/1/updateForm" method="get">
-                        <button class="btn btn-warning">수정</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>제목4</td>
-            <td>내용4</td>
-            <td>홍길동</td>
-            <td>
-                <div class="d-flex">
-                    <form action="#">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/board/1/updateForm" method="get">
-                        <button class="btn btn-warning">수정</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>제목3</td>
-            <td>내용3</td>
-            <td>홍길동</td>
-            <td>
-                <div class="d-flex">
-                    <form action="#">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/board/1/updateForm" method="get">
-                        <button class="btn btn-warning">수정</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>제목2</td>
-            <td>내용2</td>
-            <td>홍길동</td>
-            <td>
-                <div class="d-flex">
-                    <form action="#">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/board/1/updateForm" method="get">
-                        <button class="btn btn-warning">수정</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>제목1</td>
-            <td>내용1</td>
-            <td>홍길동</td>
-            <td>
-                <div class="d-flex">
-                    <form action="#">
-                        <button class="btn btn-danger">삭제</button>
-                    </form>
-                    <form action="/board/1/updateForm" method="get">
-                        <button class="btn btn-warning">수정</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
+        <tbody id="BoardBox">
+
         </tbody>
     </table>
 
 </div>
+
+<script>
+    $.ajax({
+        url: "/api/boards",
+        type: "get"
+    }).done((res) => {
+        console.log("성공")
+        console.log(res);
+        let boardList = res.body
+        boardList.forEach((Board) => {
+            $("#BoardBox").append(render(Board));
+        })
+    }).fail((res) => {
+        alert(res.responseJSON.msg);
+        console.log("실패")
+        console.log(res)
+    })
+
+
+    function render(Board) {
+        return `
+        <tr id="board-${Board.id}">
+            <td>${Board.id}</td>
+            <td>${Board.title}</td>
+            <td>${Board.content}</td>
+            <td>${Board.author}</td>
+            <td>
+                <div class="d-flex">
+                    <button onclick="del(${Board.id}" class="btn btn-danger">삭제</button>
+
+                    <form action="/board/${Board.id}/updateForm" method="get">
+                        <button class="btn btn-warning">수정</button>
+                    </form>
+                </div>
+            </td>
+        </tr>`;
+    }
+</script>
 
 {{> layout/footer}}
