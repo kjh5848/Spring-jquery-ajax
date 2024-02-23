@@ -23,6 +23,8 @@
 
 <script>
     function btnUpdate(){
+        let id = $("#id").val()
+
         let board = {
             title: $("#title").val(),
             content: $("#content").val(),
@@ -33,7 +35,7 @@
         console.log(boardJson);
 
         $.ajax({
-            url: "/api/boards/{{board.id}}",
+            url: `/api/boards/${id}`,
             type: "put",
             data: JSON.stringify(board),
             contentType: "application/json; charset=utf-8"
