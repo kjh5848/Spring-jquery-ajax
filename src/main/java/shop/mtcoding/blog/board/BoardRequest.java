@@ -13,7 +13,7 @@ public class BoardRequest {
     }
 
     @Data
-    public static class ReadDTO {
+    public static class UpdateDTO {
         private String title;
         private String content;
         private String author;

@@ -31,19 +31,4 @@ public class BoardController {
 
         return "board/updateForm";
     }
-
-    @PostMapping("/board/save")
-    public String save(){
-        return "redirect:/";
-    }
-
-    @PostMapping("/board/{id}/update")
-    public String update(@PathVariable int id){
-        return "redirect:/";
-    }
-
-    @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable int id){
-        return "redirect:/";
-    }
 }

@@ -13,9 +13,8 @@ public class BoardApiContoller {
     private final BoardRepository boardRepository;
 
     @PutMapping("/api/boards/{id}")
-    public ApiUtil<?> read(@PathVariable int id,@RequestBody BoardRequest.ReadDTO requestDTO) {
+    public ApiUtil<?> read(@PathVariable int id,@RequestBody BoardRequest.UpdateDTO requestDTO) {
         boardRepository.update(requestDTO,id);
-
         return new ApiUtil<>(null);
     }
 

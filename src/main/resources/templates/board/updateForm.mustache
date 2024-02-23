@@ -5,6 +5,7 @@
         <div class="card-header"><b>익명 글수정 화면입니다</b></div>
         <div class="card-body">
             <form>
+                <input type="hidden" id="id" value="{{board.id}}">
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Enter author" id="author" value="{{board.author}}">
                 </div>
@@ -14,14 +15,14 @@
                 <div class="mb-3">
                     <textarea class="form-control" rows="5" id="content">{{board.content}}</textarea>
                 </div>
-                <button type="button" onclick="read()" class="btn btn-primary form-control">글수정완료</button>
+                <button type="button" onclick="btnUpdate()" class="btn btn-primary form-control">글수정완료</button>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    function read(){
+    function btnUpdate(){
         let board = {
             title: $("#title").val(),
             content: $("#content").val(),
